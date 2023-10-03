@@ -25,6 +25,7 @@ extern "C" {
 
 #include <hal_spi_m_sync.h>
 #include <hal_spi_m_sync.h>
+#include <hal_i2c_m_sync.h>
 
 #include <hal_usart_sync.h>
 
@@ -34,6 +35,7 @@ extern struct spi_m_sync_descriptor EXT_SPI;
 extern struct spi_m_sync_descriptor RF_SPI;
 
 extern struct usart_sync_descriptor DEBUG_SERIAL;
+//extern struct i2c_m_sync_desc EXT_I2C;
 
 //void EXT_SPI_PORT_init(void);
 //void EXT_SPI_CLOCK_init(void);
@@ -46,6 +48,8 @@ extern struct usart_sync_descriptor DEBUG_SERIAL;
 void DEBUG_SERIAL_PORT_init(void);
 void DEBUG_SERIAL_CLOCK_init(void);
 void DEBUG_SERIAL_init(void);
+
+
 
 void delay_driver_init(void);
 

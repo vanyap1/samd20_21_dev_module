@@ -84,6 +84,7 @@ driver_init.d driver_init.o: .././driver_init.c .././driver_init.h \
  ../hal/include/hpl_ext_irq.h ../hal/include/hal_spi_m_sync.h \
  ../hal/include/hpl_spi_m_sync.h ../hal/include/hpl_spi.h \
  ../hal/utils/include/utils.h ../hal/include/hpl_spi_sync.h \
+ ../hal/include/hal_i2c_m_sync.h ../hal/include/hpl_i2c_m_sync.h \
  ../hal/include/hal_usart_sync.h ../hal/include/hal_io.h \
  ../hal/include/hpl_usart_sync.h ../hal/include/hpl_usart.h \
  ../Config/peripheral_clk_config.h ../hpl/gclk/hpl_gclk_base.h \
@@ -308,6 +309,10 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD20_DFP\1.3.165\samd20\
 ../hal/utils/include/utils.h:
 
 ../hal/include/hpl_spi_sync.h:
+
+../hal/include/hal_i2c_m_sync.h:
+
+../hal/include/hpl_i2c_m_sync.h:
 
 ../hal/include/hal_usart_sync.h:
 

@@ -254,6 +254,8 @@ hal\src\hal_ext_irq.c
 
 hal\src\hal_gpio.c
 
+hal\src\hal_i2c_m_sync.c
+
 hal\src\hal_init.c
 
 hal\src\hal_io.c

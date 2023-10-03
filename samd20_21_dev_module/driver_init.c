@@ -18,6 +18,8 @@
 
 struct usart_sync_descriptor DEBUG_SERIAL;
 
+//struct i2c_m_sync_desc EXT_I2C;
+
 void EXTERNAL_IRQ_0_init(void)
 {
 	_gclk_enable_channel(EIC_GCLK_ID, CONF_GCLK_EIC_SRC);
@@ -126,6 +128,9 @@ void DEBUG_SERIAL_init(void)
 	usart_sync_init(&DEBUG_SERIAL, SERCOM3, (void *)NULL);
 	DEBUG_SERIAL_PORT_init();
 }
+
+
+
 
 void delay_driver_init(void)
 {

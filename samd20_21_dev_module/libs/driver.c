@@ -18,10 +18,12 @@
 
 struct spi_m_sync_descriptor EXT_SPI;
 struct spi_m_sync_descriptor RF_SPI;
-
+struct i2c_m_sync_desc EXT_I2C;
 
 
 struct io_descriptor *io;
+struct io_descriptor *I2C_io;
+
 
 void RF_IRQ_Enable(void){
 	ext_irq_register(RF_IRQ, RF_int_Handler);
@@ -254,3 +256,29 @@ void RF_SPI_init(void){
 
 
 
+//External I2C port
+
+
+void EXT_I2C_init(void)
+{
+	_pm_enable_bus_clock(PM_BUS_APBC, SERCOM4);
+	_gclk_enable_channel(SERCOM4_GCLK_ID_CORE, CONF_GCLK_SERCOM4_CORE_SRC);
+	_gclk_enable_channel(SERCOM4_GCLK_ID_SLOW, CONF_GCLK_SERCOM4_SLOW_SRC);
+	
+	i2c_m_sync_init(&EXT_I2C, SERCOM4);
+	
+	gpio_set_pin_pull_mode(PB12, GPIO_PULL_OFF);
+	gpio_set_pin_function(PB12, PINMUX_PB12C_SERCOM4_PAD0);
+	gpio_set_pin_pull_mode(PB13, GPIO_PULL_OFF);
+	gpio_set_pin_function(PB13, PINMUX_PB13C_SERCOM4_PAD1);
+	
+	i2c_m_sync_get_io_descriptor(&EXT_I2C, &I2C_io);
+	i2c_m_sync_enable(&EXT_I2C);
+}
+
+
+bool I2C_write_batch(uint8_t addres , uint8_t *data, uint8_t data_len)
+{
+	i2c_m_sync_set_slaveaddr(&EXT_I2C, addres, I2C_M_SEVEN);
+	return (io_write(I2C_io, (uint8_t *)data, data_len) >= 0) ? true : false ;  
+}

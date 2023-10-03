@@ -34,7 +34,7 @@ extern "C" {
 
 	extern struct spi_m_sync_descriptor EXT_SPI;
 	extern struct spi_m_sync_descriptor RF_SPI;
-
+	extern struct i2c_m_sync_desc EXT_I2C;
 	
 	void RF_IRQ_Enable(void);
 	void RF_int_Handler(void);
@@ -60,7 +60,10 @@ extern "C" {
 	
 	//RF_Section
 	void RF_SPI_init(void);
-
+	
+	//External I2C port
+	void EXT_I2C_init(void);
+	bool I2C_write_batch(uint8_t addres , uint8_t *data, uint8_t data_len);
 	
 	
 	

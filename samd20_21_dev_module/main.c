@@ -41,7 +41,7 @@ int main(void)
 	
 	
 	//LED_Panel
-		uint8_t addr;
+		uint8_t led_val;
 		uint8_t panel_addr = 0x64;
 		#define  r_part 2
 		#define  g_part 1
@@ -78,7 +78,7 @@ int main(void)
 	//u8g2_SetFont(&u8g2, u8g2_font_battery19_tn); //battery icons
 	
 	/* Replace with your application code */
-	
+	 EXT_I2C_init();
 		
 	 GCLK->CLKCTRL.reg = GCLK_CLKCTRL_ID_WDT |
 	 GCLK_CLKCTRL_CLKEN |
@@ -92,12 +92,44 @@ int main(void)
 	//WDT->CTRL.bit.ENABLE = 1; // Start watchdog now!
 	//while(WDT->STATUS.bit.SYNCBUSY);
 
+	I2C_write_batch(panel_addr, reset_cmd, sizeof(reset_cmd));
+	delay_ms(10);
+	I2C_write_batch(panel_addr, init_cmd, sizeof(init_cmd));
+	delay_ms(10);
 	
 	while (1) {
 	
 		WDT->CLEAR.bit.CLEAR = 0xA5;
 		while(WDT->STATUS.bit.SYNCBUSY);
 		gpio_toggle_pin_level(LED_G);		
+		
+		led_val = rf_isReady();
+		led1[g_part] = led_val;
+		led1[b_part] = 255-led_val;
+		led2[g_part] = led_val;
+		led2[b_part] = 255-led_val;
+		led3[g_part] = led_val;
+		led3[b_part] = 255-led_val;
+		
+		led4[g_part] = led_val;
+		led4[b_part] = 255-led_val;
+		
+		led5[g_part] = led_val;
+		led5[b_part] = 255-led_val;
+
+		
+		if(I2C_write_batch(panel_addr, led1, sizeof(led1))){
+			gpio_set_pin_level(LED_R, false);
+		}else{
+			gpio_set_pin_level(LED_R, true);
+		}
+		I2C_write_batch(panel_addr, led2, sizeof(led2));
+		//I2C_write_batch(panel_addr, led3, sizeof(led3));
+		//I2C_write_batch(panel_addr, led4, sizeof(led4));
+		//I2C_write_batch(panel_addr, led5, sizeof(led5));
+		//I2C_write_batch(panel_addr, ext_led, sizeof(ext_led));
+		
+		
 		
 		//
 		//
