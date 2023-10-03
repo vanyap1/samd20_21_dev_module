@@ -1,0 +1,261 @@
+T2640 11166:920.718   SEGGER J-Link V7.92 Log File
+T2640 11166:920.887   DLL Compiled: Aug 11 2023 08:33:59
+T2640 11166:920.918   Logging started @ 2023-09-25 21:20
+T2640 11166:920.947 - 66.731ms
+T2640 11166:920.992 JLINK_ExecCommand("device = ATSAMD20J18", ...). 
+T2640 11166:921.341   Device "ATSAMD20J18A" selected.
+T2640 11166:921.844 - 0.817ms returns 0x00
+T2640 11166:921.885 JLINK_GetHWStatus(...)
+T2640 11166:922.284 - 0.397ms returns 0
+T2640 11166:922.347 JLINK_ClrRESET()
+T2640 11166:923.006 - 0.657ms
+T2640 11166:929.817 JLINK_SetRESET()
+T2640 11166:930.208 - 0.390ms
+T2640 11166:936.170 JLINK_ClrRESET()
+T2640 11166:937.076 - 0.904ms
+T2640 11166:943.930 JLINK_ClrTCK()
+T2640 11166:944.487 - 0.556ms returns 0
+T2640 11166:949.930 JLINK_SetRESET()
+T2640 11166:950.425 - 0.494ms
+T2640 11166:956.048 JLINK_Clock()
+T2640 11166:956.663 - 0.612ms returns 1
+T2640 11166:962.404 JLINK_TIF_Select(JLINKARM_TIF_SWD)
+T2640 11166:964.392 - 1.987ms returns 0x00
+T2640 11166:964.443 JLINK_SetSpeed(50)
+T2640 11166:964.807 - 0.364ms
+T2640 11166:964.824 JLINK_CORESIGHT_Configure()
+T2640 11166:973.768 - 8.941ms returns 0
+T2640 11166:973.896 JLINK_CORESIGHT_WriteAPDPReg(DP reg 0x02, 0x00000000)
+T2640 11166:975.402 - 1.506ms returns 0
+T2640 11166:975.430 JLINK_CORESIGHT_WriteAPDPReg(AP reg 0x00, 0x23000040)
+T2640 11166:976.874 - 1.442ms returns 0
+T2640 11166:976.909 JLINK_CORESIGHT_WriteAPDPReg(AP reg 0x01, 0x41002101)
+T2640 11166:978.400 - 1.488ms returns 0
+T2640 11166:978.456 JLINK_CORESIGHT_ReadAPDPReg(AP reg 0x03)
+T2640 11166:980.898   Value=0x00120200
+T2640 11166:980.944 - 2.488ms returns 0
+T2640 11166:980.968 JLINK_CORESIGHT_WriteAPDPReg(AP reg 0x01, 0x41002100)
+T2640 11166:982.380 - 1.411ms returns 0
+T2640 11166:982.409 JLINK_CORESIGHT_WriteAPDPReg(AP reg 0x03, 0x00000010)
+T2640 11166:983.927 - 1.516ms returns 0
+T2640 11166:983.952 JLINK_CORESIGHT_WriteAPDPReg(AP reg 0x01, 0x41002101)
+T2640 11166:985.340 - 1.387ms returns 0
+T2640 11166:985.365 JLINK_CORESIGHT_ReadAPDPReg(AP reg 0x03)
+T2640 11166:987.749   Value=0x01120200
+T2640 11166:987.797 - 2.431ms returns 0
+T2640 11167:189.741 JLINK_CORESIGHT_ReadAPDPReg(AP reg 0x03)
+T2640 11167:193.673   Value=0x00120300
+T2640 11167:193.738 - 3.999ms returns 0
+T2640 11167:212.737 JLINK_ExecCommand("Device = ATSAMD20J18", ...). 
+T2640 11167:213.214   Device "ATSAMD20J18A" selected.
+T2640 11167:213.774 - 1.003ms returns 0x00
+T2640 11167:213.799 JLINK_TIF_Select(JLINKARM_TIF_SWD)
+T2640 11167:213.811 - 0.011ms returns 0x00
+T2640 11167:213.822 JLINK_SetSpeed(4000)
+T2640 11167:214.260 - 0.437ms
+T2640 11167:214.286 JLINK_ResetPullsRESET(OFF)
+T2640 11167:214.296 - 0.009ms
+T2640 11167:214.307 JLINK_Connect()
+T2640 11167:214.957   InitTarget() start
+T2640 11167:214.982    J-Link Script File: Executing InitTarget()
+T2640 11167:215.021   InitTarget()
+T2640 11167:224.437   InitTarget() end - Took 9.37ms
+T2640 11167:225.615   Found SW-DP with ID 0x0BC11477
+T2640 11167:228.168   Old FW that does not support reading DPIDR via DAP jobs
+T2640 11167:229.173   DPv0 detected
+T2640 11167:229.209   CoreSight SoC-400 or earlier
+T2640 11167:229.236   Scanning AP map to find all available APs
+T2640 11167:230.537   AP[1]: Stopped AP scan as end of AP map has been reached
+T2640 11167:230.599   AP[0]: AHB-AP (IDR: 0x04770031)
+T2640 11167:230.634   Iterating through AP map to find AHB-AP to use
+T2640 11167:232.004   AP[0]: Core found
+T2640 11167:232.036   AP[0]: AHB-AP ROM base: 0x41003000
+T2640 11167:232.753   CPUID register: 0x410CC601. Implementer code: 0x41 (ARM)
+T2640 11167:232.785   Found Cortex-M0 r0p1, Little endian.
+T2640 11167:233.540   -- Max. mem block: 0x000015D0
+T2640 11167:234.309   CPU_ReadMem(4 bytes @ 0xE000EDF0)
+T2640 11167:234.926   CPU_ReadMem(4 bytes @ 0xE0002000)
+T2640 11167:235.540   FPUnit: 4 code (BP) slots and 0 literal slots
+T2640 11167:235.697   CPU_ReadMem(4 bytes @ 0xE000EDFC)
+T2640 11167:236.445   CPU_ReadMem(4 bytes @ 0xE0001000)
+T2640 11167:237.176   CPU_WriteMem(4 bytes @ 0xE0001000)
+T2640 11167:238.017   CoreSight components:
+T2640 11167:238.194   ROMTbl[0] @ 41003000
+T2640 11167:238.226   CPU_ReadMem(64 bytes @ 0x41003000)
+T2640 11167:239.335   CPU_ReadMem(32 bytes @ 0xE00FFFE0)
+T2640 11167:240.214   [0][0]: E00FF000 CID B105100D PID 000BB4C0 ROM Table
+T2640 11167:240.247   ROMTbl[1] @ E00FF000
+T2640 11167:240.263   CPU_ReadMem(64 bytes @ 0xE00FF000)
+T2640 11167:241.354   CPU_ReadMem(32 bytes @ 0xE000EFE0)
+T2640 11167:242.313   [1][0]: E000E000 CID B105E00D PID 000BB008 SCS
+T2640 11167:242.337   CPU_ReadMem(32 bytes @ 0xE0001FE0)
+T2640 11167:243.150   [1][1]: E0001000 CID B105E00D PID 000BB00A DWT
+T2640 11167:243.176   CPU_ReadMem(32 bytes @ 0xE0002FE0)
+T2640 11167:243.988   [1][2]: E0002000 CID B105E00D PID 000BB00B FPB
+T2640 11167:244.020 - 29.711ms returns 0x00
+T2640 11167:244.133 JLINK_Halt()
+T2640 11167:248.068 - 3.932ms returns 0x00
+T2640 11167:251.224 JLINK_JTAG_GetDeviceID(DeviceIndex = 0)
+T2640 11167:251.264 - 0.040ms returns 0
+T2640 11167:251.282 JLINK_ReadMemU32(0x41002018, 0x1 Items)
+T2640 11167:251.333   CPU_ReadMem(4 bytes @ 0x41002018)
+T2640 11167:252.037   Data:  00 14 00 10
+T2640 11167:252.068 - 0.785ms returns 1 (0x1)
+T258C 11167:261.080 JLINK_IsHalted()
+T258C 11167:261.139 - 0.059ms returns TRUE
+T258C 11167:261.158 JLINK_GetMOEs(...)
+T258C 11167:261.185   CPU_ReadMem(4 bytes @ 0xE000ED30)
+T258C 11167:261.825 - 0.666ms returns 0x01
+T258C 11167:261.851 JLINK_ReadReg(R15 (PC))
+T258C 11167:261.869 - 0.018ms returns 0xFFFFFFFE
+T2640 11167:374.468 JLINK_BeginDownload(Flags = 0x00000000)
+T2640 11167:374.513 - 0.046ms
+T2640 11167:374.540 JLINK_WriteMem(0x00000000, 0x2A20 Bytes, ...)
+T2640 11167:374.551   Data:  18 28 00 20 85 13 00 00 81 13 00 00 81 13 00 00 ...
+T2640 11167:374.902   completely In flash
+T2640 11167:374.927 - 0.387ms returns 0x2A20
+T258C 11167:462.125 JLINK_IsHalted()
+T258C 11167:462.998 - 0.873ms returns TRUE
+T2640 11167:463.984 JLINK_EndDownload()
+T2640 11167:464.523   CPU_ReadMem(4 bytes @ 0xE000ED90)
+T2640 11167:465.237    -- --------------------------------------
+T2640 11167:465.274    -- Flash bank @ 0x00000000: Default: L2 verify disabled because algorithm performs L1 verify
+T2640 11167:465.296    -- Start of determining dirty areas in flash cache
+T2640 11167:465.320    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00000000 if necessary
+T2640 11167:465.342    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00000100 if necessary
+T2640 11167:465.363    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00000200 if necessary
+T2640 11167:465.384    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00000300 if necessary
+T2640 11167:465.405    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00000400 if necessary
+T2640 11167:465.426    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00000500 if necessary
+T2640 11167:465.447    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00000600 if necessary
+T2640 11167:465.468    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00000700 if necessary
+T2640 11167:465.488    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00000800 if necessary
+T2640 11167:465.509    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00000900 if necessary
+T2640 11167:465.530    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00000A00 if necessary
+T2640 11167:465.551    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00000B00 if necessary
+T2640 11167:465.571    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00000C00 if necessary
+T2640 11167:465.592    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00000D00 if necessary
+T2640 11167:465.613    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00000E00 if necessary
+T2640 11167:465.633    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00000F00 if necessary
+T2640 11167:465.768    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00001000 if necessary
+T2640 11167:465.790    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00001100 if necessary
+T2640 11167:465.811    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00001200 if necessary
+T2640 11167:465.831    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00001300 if necessary
+T2640 11167:465.852    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00001400 if necessary
+T2640 11167:465.873    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00001500 if necessary
+T2640 11167:465.894    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00001600 if necessary
+T2640 11167:465.915    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00001700 if necessary
+T2640 11167:465.932    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00001800 if necessary
+T2640 11167:465.947    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00001900 if necessary
+T2640 11167:465.961    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00001A00 if necessary
+T2640 11167:465.980    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00001B00 if necessary
+T2640 11167:465.996    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00001C00 if necessary
+T2640 11167:466.010    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00001D00 if necessary
+T2640 11167:466.025    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00001E00 if necessary
+T2640 11167:466.040    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00001F00 if necessary
+T2640 11167:466.055    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00002000 if necessary
+T2640 11167:466.070    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00002100 if necessary
+T2640 11167:466.085    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00002200 if necessary
+T2640 11167:466.099    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00002300 if necessary
+T2640 11167:466.114    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00002400 if necessary
+T2640 11167:466.128    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00002500 if necessary
+T2640 11167:466.153    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00002600 if necessary
+T2640 11167:466.168    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00002700 if necessary
+T2640 11167:466.184    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00002800 if necessary
+T2640 11167:466.200    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00002900 if necessary
+T2640 11167:466.215    -- Filling invalid ranges in sector buffer (flash cache) for sector @ 0x00002A00 if necessary
+T2640 11167:466.319    -- End of determining dirty areas
+T2640 11167:466.334    -- Start of preparing flash programming
+T2640 11167:466.349    -- Calculating RAM usage
+T2640 11167:466.375    -- RAM usage = 2884 Bytes
+T2640 11167:466.389    -- Preserving CPU registers
+T2640 11167:466.425    -- Preparing target
+T2640 11167:466.440    -- Preserving target RAM temporarily used for programming
+T2640 11167:489.560    -- Downloading RAMCode
+T2640 11167:514.043    -- Preparing RAMCode
+T2640 11167:522.165    -- End of preparing flash programming
+T2640 11167:541.098    -- CPU speed could not be measured.
+T2640 11167:541.170    -- Start of comparing flash
+T2640 11167:541.192    -- CRC check was estimated as fastest method
+T2640 11167:590.990    -- Comparing range 0x0000 - 0x2AFF (43 Sectors, 10 KB), using multi-block CRC calculation
+T2640 11167:634.551    -- CRC does not match for sectors 0-42
+T2640 11167:634.616    -- End of comparing flash
+T2640 11167:634.631    -- Start of erasing sectors
+T2640 11167:634.645    -- End of erasing sectors
+T2640 11167:634.659    -- Start of flash programming
+T2640 11167:634.677    -- Programming range 0x00000000 - 0x00002AFF ( 43 Sectors, 10 KB)
+T2640 11167:850.293    -- End of flash programming
+T2640 11167:850.345    -- 0x0000 - 0x2AFF ( 43 Sectors, 10 KB)
+T2640 11167:850.362    -- Start of restoring
+T2640 11167:850.378    -- Restoring RAMCode
+T2640 11167:871.483    -- Restoring target memory
+T2640 11167:892.149    -- Restore target
+T2640 11167:892.202    -- Restoring CPU registers
+T2640 11167:892.240    -- End of restoring
+T2640 11167:892.332    -- Bank 0 @ 0x00000000: 1 range affected (11008 bytes)
+T2640 11167:892.364    -- Total: 0.425s (Prepare: 0.074s, Compare: 0.093s, Erase: 0.000s, Program & Verify: 0.229s, Restore: 0.028s)
+T2640 11167:892.391    -- Program & Verify speed: 47 KB/s
+T2640 11167:895.606 - 431.619ms returns 11008 (0x2B00)
+T2640 11167:895.751 JLINK_ResetPullsRESET(ON)
+T2640 11167:895.769 - 0.018ms
+T2640 11167:895.783 JLINK_ResetNoHalt()
+T2640 11167:896.643   InitTarget() start
+T2640 11167:896.687    J-Link Script File: Executing InitTarget()
+T2640 11167:896.723   InitTarget()
+T2640 11167:901.523   InitTarget() end - Took 4.76ms
+T2640 11167:902.605   Found SW-DP with ID 0x0BC11477
+T2640 11167:905.059   Old FW that does not support reading DPIDR via DAP jobs
+T2640 11167:906.143   DPv0 detected
+T2640 11167:906.199   CoreSight SoC-400 or earlier
+T2640 11167:906.248   AP map detection skipped. Manually configured AP map found.
+T2640 11167:906.290   AP[0]: AHB-AP (IDR: Not set)
+T2640 11167:908.021   AP[0]: Core found
+T2640 11167:908.089   AP[0]: AHB-AP ROM base: 0x41003000
+T2640 11167:908.907   CPUID register: 0x410CC601. Implementer code: 0x41 (ARM)
+T2640 11167:908.962   Found Cortex-M0 r0p1, Little endian.
+T2640 11167:909.440   -- Max. mem block: 0x000012E0
+T2640 11167:909.478   CPU_ReadMem(4 bytes @ 0xE000EDF0)
+T2640 11167:910.051   CPU_ReadMem(4 bytes @ 0xE0002000)
+T2640 11167:910.735   FPUnit: 4 code (BP) slots and 0 literal slots
+T2640 11167:910.763   CPU_ReadMem(4 bytes @ 0xE000EDFC)
+T2640 11167:911.358   CPU_ReadMem(4 bytes @ 0xE0001000)
+T2640 11167:912.313   CoreSight components:
+T2640 11167:912.420   ROMTbl[0] @ 41003000
+T2640 11167:912.452   CPU_ReadMem(64 bytes @ 0x41003000)
+T2640 11167:913.645   CPU_ReadMem(32 bytes @ 0xE00FFFE0)
+T2640 11167:914.637   [0][0]: E00FF000 CID B105100D PID 000BB4C0 ROM Table
+T2640 11167:914.688   ROMTbl[1] @ E00FF000
+T2640 11167:914.709   CPU_ReadMem(64 bytes @ 0xE00FF000)
+T2640 11167:916.002   CPU_ReadMem(32 bytes @ 0xE000EFE0)
+T2640 11167:916.943   [1][0]: E000E000 CID B105E00D PID 000BB008 SCS
+T2640 11167:916.981   CPU_ReadMem(32 bytes @ 0xE0001FE0)
+T2640 11167:917.918   [1][1]: E0001000 CID B105E00D PID 000BB00A DWT
+T2640 11167:917.957   CPU_ReadMem(32 bytes @ 0xE0002FE0)
+T2640 11167:918.919   [1][2]: E0002000 CID B105E00D PID 000BB00B FPB
+T2640 11167:918.972   JLINK_Reset()
+T2640 11167:918.989     CPU_ReadMem(4 bytes @ 0x20000000)
+T2640 11167:919.599     CPU_WriteMem(4 bytes @ 0x20000000)
+T2640 11167:920.267     ResetTarget() start
+T2640 11167:920.303      J-Link Script File: Executing ResetTarget()
+T2640 11167:920.326     CPU_ReadMem(4 bytes @ 0xE000EDFC)
+T2640 11167:920.981     CPU_WriteMem(4 bytes @ 0xE000EDFC)
+T2640 11167:921.680     CPU_WriteMem(4 bytes @ 0xE000ED0C)
+T2640 11167:923.740     CPU_ReadMem(4 bytes @ 0xE000EDF0)
+T2640 11167:924.381     CPU_ReadMem(4 bytes @ 0x41002100)
+T2640 11167:925.027     CPU_WriteMem(4 bytes @ 0xE000EDFC)
+T2640 11167:925.732     ResetTarget() end - Took 5.35ms
+T2640 11167:929.651     CPU_WriteMem(4 bytes @ 0xE0002000)
+T2640 11167:930.446     CPU_ReadMem(4 bytes @ 0xE000EDFC)
+T2640 11167:931.223     CPU_ReadMem(4 bytes @ 0xE0001000)
+T2640 11167:931.965     CPU_WriteMem(4 bytes @ 0xE0001000)
+T2640 11167:932.635   - 13.661ms
+T2640 11167:932.660   JLINK_Go()
+T2640 11167:932.681     CPU_ReadMem(4 bytes @ 0xE0001000)
+T2640 11167:933.376     CPU_WriteMem(4 bytes @ 0xE0001000)
+T2640 11167:934.031     CPU_WriteMem(4 bytes @ 0xE0001004)
+T2640 11167:935.321   - 2.659ms
+T2640 11167:935.342 - 39.559ms
+T2640 11167:944.258 JLINK_Close()
+T2640 11167:967.257 - 22.998ms
+T2640 11167:967.302   
+T2640 11167:967.312   Closed
