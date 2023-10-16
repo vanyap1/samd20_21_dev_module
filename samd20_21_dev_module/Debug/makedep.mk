@@ -296,3 +296,5 @@ libs\RFM69.c
 
 main.c
 
+templates.c
+

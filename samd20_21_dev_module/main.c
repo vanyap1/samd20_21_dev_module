@@ -9,6 +9,7 @@
 #include "u8g2.h"
 
 #include "RFM69.h"
+#include "RFM69registers.h"
 
 #define NETWORKID 33
 #define NODEID    3
@@ -18,6 +19,9 @@
 u8g2_t u8g2;
 
 uint16_t seco, mine, hour;
+uint32_t pack_counter = 0;
+uint32_t last_pkg_time;
+uint8_t rf_tx_str[32] = "\0";
 
 int main(void)
 {
@@ -25,8 +29,8 @@ int main(void)
 	atmel_start_init();
 	
 	EXT_SPI_init();
-	
 	RF_SPI_init();
+	EXT_I2C_init();
 	
 	rfm69_init(868, NODEID, NETWORKID);
 	setHighPower(true);
@@ -78,7 +82,7 @@ int main(void)
 	//u8g2_SetFont(&u8g2, u8g2_font_battery19_tn); //battery icons
 	
 	/* Replace with your application code */
-	 EXT_I2C_init();
+	 
 		
 	 GCLK->CLKCTRL.reg = GCLK_CLKCTRL_ID_WDT |
 	 GCLK_CLKCTRL_CLKEN |
@@ -92,47 +96,40 @@ int main(void)
 	//WDT->CTRL.bit.ENABLE = 1; // Start watchdog now!
 	//while(WDT->STATUS.bit.SYNCBUSY);
 
-	I2C_write_batch(panel_addr, reset_cmd, sizeof(reset_cmd));
-	delay_ms(10);
-	I2C_write_batch(panel_addr, init_cmd, sizeof(init_cmd));
-	delay_ms(10);
+	//I2C_write_batch(panel_addr, reset_cmd, sizeof(reset_cmd));
+	//delay_ms(10);
+	//I2C_write_batch(panel_addr, init_cmd, sizeof(init_cmd));
+	//delay_ms(10);
+	
+	
+	#define  input_reg		0x00
+	#define  output_reg		0x02
+	#define  polarity_reg	0x04
+	#define  config_reg		0x06
+	
+	uint8_t port_expander_off[3] = {output_reg,0x00, 0x00};
+	uint8_t port_expander_on[3] = {output_reg,0x01, 0x00};
+	uint8_t port_config[3] = {config_reg, 0x02, 0x00};
+	uint8_t port_polarity[3] = {polarity_reg, 0x00, 0x00};
+	
+	uint8_t port_state[2];
+	uint8_t addr_expander = 0x20; 
+	
+	
+	I2C_write_batch(addr_expander, port_config, sizeof(port_config));
+	I2C_write_batch(addr_expander, port_polarity, sizeof(port_polarity));
+	
 	
 	while (1) {
 	
 		WDT->CLEAR.bit.CLEAR = 0xA5;
 		while(WDT->STATUS.bit.SYNCBUSY);
-		gpio_toggle_pin_level(LED_G);		
-		
-		led_val = rf_isReady();
-		led1[g_part] = led_val;
-		led1[b_part] = 255-led_val;
-		led2[g_part] = led_val;
-		led2[b_part] = 255-led_val;
-		led3[g_part] = led_val;
-		led3[b_part] = 255-led_val;
-		
-		led4[g_part] = led_val;
-		led4[b_part] = 255-led_val;
-		
-		led5[g_part] = led_val;
-		led5[b_part] = 255-led_val;
-
-		
-		if(I2C_write_batch(panel_addr, led1, sizeof(led1))){
-			gpio_set_pin_level(LED_R, false);
-		}else{
-			gpio_set_pin_level(LED_R, true);
-		}
-		I2C_write_batch(panel_addr, led2, sizeof(led2));
-		//I2C_write_batch(panel_addr, led3, sizeof(led3));
-		//I2C_write_batch(panel_addr, led4, sizeof(led4));
-		//I2C_write_batch(panel_addr, led5, sizeof(led5));
-		//I2C_write_batch(panel_addr, ext_led, sizeof(ext_led));
 		
 		
 		
-		//
-		//
+		
+		
+		
 		//gpio_toggle_pin_level(LED_G);
 		//gpio_toggle_pin_level(LED_SD);
 		//gpio_toggle_pin_level(LED_R);
@@ -143,7 +140,13 @@ int main(void)
 		u8g2_DrawLine(&u8g2, 3,12, 252,12);
 		
 		
-		sprintf(debug_str, "INT:%04d; tim:%03d:%02d:%02d " , rf_isReady(), hour,mine,seco);
+		sprintf(debug_str, "INT:%04d; RSSI: %04d; tim:%03d:%02d:%02d; %01d " , rf_isReady(), lastRSSI(),  hour,mine,seco, get_io0());
+		//sprintf((char *)rf_str , "%02d/%02d/%02d/%02d/%02d    ",  readReg(REG_IRQFLAGS1), readReg(REG_IRQFLAGS2),  readReg(REG_TEMP1),  last_pkg_time,  rx_header[4]);
+		
+		
+		
+		
+		
 		u8g2_DrawStr(&u8g2, 3, 23, (char *)debug_str);
 		u8g2_DrawStr(&u8g2, 3, 34, (char *)rf_str);
 		u8g2_DrawStr(&u8g2, 3, 44, (char *)DATA);
@@ -163,15 +166,39 @@ int main(void)
 			hour++;
 			mine=0;
 		}
-		if (rx_ready) {
+		last_pkg_time++;
+		
+		
+		//if(last_pkg_time > 10){
+			//delay_ms(3000);
+			//last_pkg_time=0;
+			////RF_HW_Reset();
+			//rfm69_init(868, NODEID, NETWORKID);
+			//setHighPower(true);
+		//}
+		
+		
+		sprintf(rf_tx_str, "%03d:%02d:%02d test_ ; %010d\0",  hour,mine,seco, pack_counter);
+		gpio_set_pin_level(LED_R, true);
+		sendFrame(0, &rf_tx_str, sizeof(rf_tx_str));
+		gpio_set_pin_level(LED_R, false);
+		
+
+		pack_counter++;
+		//delay_ms(100);
+		
+		if (rf_isReady()) {
+			
 			sprintf((char *)rf_str , "%02d/%02d/%02d/%02d/%02d    ",  rx_header[0], rx_header[1], rx_header[2],  rx_header[3],  rx_header[4]);
+			
 			//u8g2_ClearBuffer(&u8g2);
 			//u8g2_DrawRFrame(&u8g2, 200, 4, 40 ,40, 5);
 			//u8g2_DrawStr(&u8g2, 3, 34, (char *)debug_str);
 			//u8g2_DrawStr(&u8g2, 3, 44, (char *)DATA);
 			
 			//u8g2_SendBuffer(&u8g2);
-			rx_ready = 0;
+			//rx_ready = 0;
+			last_pkg_time=0;
 		}
 		
 	}

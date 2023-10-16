@@ -38,9 +38,10 @@ extern "C" {
 	
 	void RF_IRQ_Enable(void);
 	void RF_int_Handler(void);
-	uint8_t rf_isReady();
+	bool rf_isReady();
 	uint8_t RFM69_read_reg(uint8_t addr);
 	void RFM69_ReadBuff(uint8_t* buff, uint16_t len);
+	void RFM69_WriteBuff(uint8_t* buff, uint16_t len);
 	void RFM_69_sel(bool arg);
 	void SPI_write(uint8_t);
 	uint8_t SPI_read();
@@ -60,11 +61,12 @@ extern "C" {
 	
 	//RF_Section
 	void RF_SPI_init(void);
+	void RF_HW_Reset(void);
 	
 	//External I2C port
 	void EXT_I2C_init(void);
 	bool I2C_write_batch(uint8_t addres , uint8_t *data, uint8_t data_len);
-	
+	bool I2C_read_batch(uint8_t addres ,uint8_t *data, uint8_t data_len);
 	
 	
 	

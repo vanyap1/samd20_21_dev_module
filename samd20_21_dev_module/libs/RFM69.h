@@ -82,7 +82,7 @@ uint8_t readTemperature(uint8_t calFactor); // get CMOS temperature (8bit)
 void rcCalibration();                         // calibrate the internal RC oscillator for use in wide temperature variations - see datasheet section [4.3.5. RC Timer Accuracy]
 uint8_t readReg(uint8_t addr);
 void writeReg(uint8_t addr, uint8_t val);
-void sendFrame(uint8_t toAddress, const void* buffer, uint8_t size, uint8_t requestACK, uint8_t sendACK);
+void sendFrame(uint8_t toAddress, const void* buffer, uint8_t size);
 void setMode(uint8_t mode);
 void setHighPowerRegs(uint8_t onOff);
 void promiscuous(uint8_t onOff);
@@ -90,6 +90,7 @@ void maybeInterrupts();
 void RF_select();
 void RF_unselect();
 void data_ready();
+int16_t lastRSSI();
 uint8_t receiveDone();
 
 #endif

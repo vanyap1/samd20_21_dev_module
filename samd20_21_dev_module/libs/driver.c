@@ -24,44 +24,55 @@ struct i2c_m_sync_desc EXT_I2C;
 struct io_descriptor *io;
 struct io_descriptor *I2C_io;
 
+struct io_descriptor *lcd_spi;
+struct io_descriptor *rf_spi;
+
+
 
 void RF_IRQ_Enable(void){
 	ext_irq_register(RF_IRQ, RF_int_Handler);
-	//ext_irq_register(RF_IRQ, NULL);
-	//gpio_toggle_pin_level(LED_G);
-	//spi_m_sync_get_io_descriptor(&VFD_SPI, &iospi);
 	spi_m_sync_enable(&RF_SPI);
-	
-	
 }
 
 
 uint8_t int_count = 0;
-uint8_t rf_isReady(){
-	return int_count;
+bool rf_isReady(){
+	if (int_count != 0){
+		data_ready();
+		int_count = 0;
+		return true;
+	}
+	return false;
 }
 
 void RF_int_Handler(void){
 	int_count++;
 	//gpio_toggle_pin_level(LED);
-	data_ready();
+	
 }
+
 
 
 uint8_t RFM69_read_reg(uint8_t addr){
 	//uint8_t *addr_ptr = &addr;
 	//struct io_descriptor *io;
-	spi_m_sync_get_io_descriptor(&RF_SPI, &io);
+	//spi_m_sync_get_io_descriptor(&RF_SPI, &io);
 	//spi_m_sync_enable(&VFD_SPI);
-	io_write(io, &addr, 1);
-	io_read(io,&addr,1);
+	io_write(rf_spi, &addr, 1);
+	io_read(rf_spi,&addr,1);
 	return addr;
 }
 
 void RFM69_ReadBuff(uint8_t* buff, uint16_t len){
-	spi_m_sync_get_io_descriptor(&RF_SPI, &io);
+	//spi_m_sync_get_io_descriptor(&RF_SPI, &io);
 	//spi_m_sync_enable(&VFD_SPI);
-	io_read(io,buff,len);
+	io_read(rf_spi,buff,len);
+}
+
+void RFM69_WriteBuff(uint8_t* buff, uint16_t len){
+	//spi_m_sync_get_io_descriptor(&RF_SPI, &io);
+	//spi_m_sync_enable(&VFD_SPI);
+	io_write(rf_spi,buff,len);
 }
 
 
@@ -72,17 +83,17 @@ void RFM_69_sel(bool arg){
 
 void SPI_write(uint8_t arg){
 	uint8_t *addr_ptr = &arg;
-	struct io_descriptor *io;
-	spi_m_sync_get_io_descriptor(&RF_SPI, &io); ///<<< EXP
-	spi_m_sync_enable(&RF_SPI);
-	io_write(io, &arg, 1);	
+	//struct io_descriptor *io;
+	//spi_m_sync_get_io_descriptor(&RF_SPI, &io); ///<<< EXP
+	//spi_m_sync_enable(&RF_SPI);
+	io_write(rf_spi, &arg, 1);	
 }
 
 
 uint8_t SPI_read(){
 	uint8_t data_byte = 0;
-	spi_m_sync_get_io_descriptor(&RF_SPI, &io); ///<<< EXP
-	io_read(io,&data_byte,1);
+	//spi_m_sync_get_io_descriptor(&RF_SPI, &io); ///<<< EXP
+	io_read(rf_spi,&data_byte,1);
 	return data_byte;
 }
 
@@ -108,7 +119,8 @@ void EXT_SPI_init(void)
 	
 	
 	spi_m_sync_init(&EXT_SPI, SERCOM0);
-	spi_m_sync_get_io_descriptor(&EXT_SPI, &io);
+	spi_m_sync_get_io_descriptor(&EXT_SPI, &lcd_spi);
+	spi_m_sync_enable(&EXT_SPI);
 	
 	gpio_set_pin_level(PA04, false);
 	gpio_set_pin_direction(PA04, GPIO_DIRECTION_OUT);
@@ -141,9 +153,9 @@ void EXT_SPI_init(void)
 }
 void vfd_write_data(uint8_t* buff, uint16_t len){
 	//struct io_descriptor *io;
-	spi_m_sync_get_io_descriptor(&EXT_SPI, &io);
-	spi_m_sync_enable(&EXT_SPI);
-	io_write(io, buff, len);
+	//spi_m_sync_get_io_descriptor(&EXT_SPI, &io);
+	//spi_m_sync_enable(&EXT_SPI);
+	io_write(lcd_spi, buff, len);
 	
 }
 
@@ -202,7 +214,8 @@ void RF_SPI_init(void){
 	_gclk_enable_channel(SERCOM1_GCLK_ID_CORE, CONF_GCLK_SERCOM1_CORE_SRC);
 	
 	spi_m_sync_init(&RF_SPI, SERCOM1);
-	spi_m_sync_get_io_descriptor(&RF_SPI, &io);
+	spi_m_sync_get_io_descriptor(&RF_SPI, &rf_spi);
+	spi_m_sync_enable(&RF_SPI);
 	
 	gpio_set_pin_level(PA00, false);
 	gpio_set_pin_direction(PA00, GPIO_DIRECTION_OUT);
@@ -219,10 +232,7 @@ void RF_SPI_init(void){
 	gpio_set_pin_level(RF_RST, false);
 	gpio_set_pin_direction(RF_RST, GPIO_DIRECTION_OUT);
 	gpio_set_pin_function(RF_RST, GPIO_PIN_FUNCTION_OFF);
-	gpio_set_pin_level(RF_RST, true);
-	delay_ms(10);
-	gpio_set_pin_level(RF_RST, false);
-	
+	RF_HW_Reset();
 	//Radio additional IO setup
 	gpio_set_pin_level(RF_CS, true);
 	gpio_set_pin_direction(RF_CS, GPIO_DIRECTION_OUT);
@@ -254,7 +264,12 @@ void RF_SPI_init(void){
 }
 
 
-
+void RF_HW_Reset(void){
+	gpio_set_pin_level(RF_RST, true);
+	delay_ms(1);
+	gpio_set_pin_level(RF_RST, false);
+	delay_ms(20);
+}
 
 //External I2C port
 
@@ -277,8 +292,15 @@ void EXT_I2C_init(void)
 }
 
 
-bool I2C_write_batch(uint8_t addres , uint8_t *data, uint8_t data_len)
-{
+bool I2C_write_batch(uint8_t addres, uint8_t *data, uint8_t data_len){
 	i2c_m_sync_set_slaveaddr(&EXT_I2C, addres, I2C_M_SEVEN);
-	return (io_write(I2C_io, (uint8_t *)data, data_len) >= 0) ? true : false ;  
+	return (io_write(I2C_io, (uint8_t *)data, data_len) >= 0) ? true : false;  
+}
+
+bool I2C_read_batch(uint8_t addres ,uint8_t *data, uint8_t data_len){
+	i2c_m_sync_set_slaveaddr(&EXT_I2C, addres, I2C_M_SEVEN);
+	
+	i2c_m_sync_cmd_read(&EXT_I2C, 0x00, data, data_len);
+	
+	//return (io_read(I2C_io, (uint8_t *)data, data_len) >= 0) ? true : false;
 }

@@ -205,7 +205,8 @@ C_SRCS +=  \
 ../hpl/systick/hpl_systick.c \
 ../libs/driver.c \
 ../libs/RFM69.c \
-../main.c
+../main.c \
+../templates.c
 
 
 PREPROCESSING_SRCS += 
@@ -361,7 +362,8 @@ hpl/sysctrl/hpl_sysctrl.o \
 hpl/systick/hpl_systick.o \
 libs/driver.o \
 libs/RFM69.o \
-main.o
+main.o \
+templates.o
 
 OBJS_AS_ARGS +=  \
 atmel_start.o \
@@ -510,7 +512,8 @@ hpl/sysctrl/hpl_sysctrl.o \
 hpl/systick/hpl_systick.o \
 libs/driver.o \
 libs/RFM69.o \
-main.o
+main.o \
+templates.o
 
 C_DEPS +=  \
 atmel_start.d \
@@ -659,7 +662,8 @@ hpl/sysctrl/hpl_sysctrl.d \
 hpl/systick/hpl_systick.d \
 libs/driver.d \
 libs/RFM69.d \
-main.d
+main.d \
+templates.d
 
 C_DEPS_AS_ARGS +=  \
 atmel_start.d \
@@ -808,7 +812,8 @@ hpl/sysctrl/hpl_sysctrl.d \
 hpl/systick/hpl_systick.d \
 libs/driver.d \
 libs/RFM69.d \
-main.d
+main.d \
+templates.d
 
 OUTPUT_FILE_PATH +=samd20_21_dev_module.elf
 
@@ -1849,6 +1854,13 @@ libs/RFM69.o: ../libs/RFM69.c
 	
 
 ./main.o: .././main.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD20J18__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"../csrc" -I"../libs" -I"../Config" -I".." -I"../examples" -I"../hal/include" -I"../hal/utils/include" -I"../hpl/core" -I"../hpl/eic" -I"../hpl/gclk" -I"../hpl/pm" -I"../hpl/port" -I"../hpl/sercom" -I"../hpl/sysctrl" -I"../hpl/systick" -I"../hri" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD20_DFP\1.3.165\samd20\include"  -O0 -ffunction-sections -fdata-sections -g3 -Wall -mcpu=cortex-m0plus -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+./templates.o: .././templates.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 6.3.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD20J18__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"../csrc" -I"../libs" -I"../Config" -I".." -I"../examples" -I"../hal/include" -I"../hal/utils/include" -I"../hpl/core" -I"../hpl/eic" -I"../hpl/gclk" -I"../hpl/pm" -I"../hpl/port" -I"../hpl/sercom" -I"../hpl/sysctrl" -I"../hpl/systick" -I"../hri" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD20_DFP\1.3.165\samd20\include"  -O0 -ffunction-sections -fdata-sections -g3 -Wall -mcpu=cortex-m0plus -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
